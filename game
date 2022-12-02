@@ -1,0 +1,34 @@
+import random
+
+# Constants representing the game board
+BOARD_WIDTH = 7
+BOARD_HEIGHT = 7
+
+# Define the initial positions of the pegs on the board
+peg_positions = [3, 3, 3, 3, 3, 3, 3]
+
+# Define a function to simulate a disc drop
+def drop_disc(position):
+  # Randomly move the disc to the left or right
+  if random.random() < 0.5:
+    position -= 1
+  else:
+    position += 1
+
+  # Make sure the disc doesn't move off the board
+  position = max(0, min(position, BOARD_WIDTH - 1))
+
+  return position
+
+# Play the game by dropping 10 discs
+for i in range(10):
+  # Start the disc at the top of the board
+  disc_position = 3
+
+  # Drop the disc through the pegs
+  for peg in peg_positions:
+    disc_position = drop_disc(disc_position)
+
+  # Print the final position of the disc
+  print(f"Disc landed in slot {disc_position + 1}")
+
