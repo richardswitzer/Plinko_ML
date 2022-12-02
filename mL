@@ -1,0 +1,44 @@
+import random
+
+# Import the necessary machine learning libraries
+from sklearn.linear_model import LinearRegression
+
+# Constants representing the game board
+BOARD_WIDTH = 7
+BOARD_HEIGHT = 7
+
+# Define the initial positions of the pegs on the board
+peg_positions = [3, 3, 3, 3, 3, 3, 3]
+
+# Define a function to simulate a disc drop
+def drop_disc(position, peg_positions):
+  # Randomly move the disc to the left or right
+  if random.random() < 0.5:
+    position -= 1
+  else:
+    position += 1
+
+  # Make sure the disc doesn't move off the board
+  position = max(0, min(position, BOARD_WIDTH - 1))
+
+  # Return the updated position of the disc
+  return position
+
+# Train a linear regression model to predict the final position of the disc
+# based on the initial position and the positions of the pegs
+X = []
+y = []
+for i in range(1000):
+  peg_positions = [random.randint(0, BOARD_WIDTH - 1) for _ in range(BOARD_HEIGHT)]
+  disc_position = random.randint(0, BOARD_WIDTH - 1)
+  for peg in peg_positions:
+    disc_position = drop_disc(disc_position, peg_positions)
+  X.append([disc_position] + peg_positions)
+  y.append(disc_position)
+model = LinearRegression()
+model.fit(X, y)
+
+# Play the game by dropping 10 discs
+for i in range(10):
+  # Start the disc at the top of the board
+  disc_position =
